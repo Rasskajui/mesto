@@ -4,3 +4,16 @@
   line-height: 1.14;
   margin: 0;
 }
+
+@media screen and (max-width: 999px) {
+  .profile__name {
+    margin-left: 30px;
+  }
+}
+
+@media screen and (max-width: 665px) {
+  .profile__name {
+    font-size: 27px;
+    line-height: 1.22;
+  }
+}
