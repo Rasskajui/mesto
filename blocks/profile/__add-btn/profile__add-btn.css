@@ -20,6 +20,12 @@
     margin-left: 0;
     margin-top: 36px;
     background-size: 16px 16px;
-    width: 100%;
+    width: calc(282px * 2 + 20px);
+  }
+}
+
+@media screen and (max-width: 665px) {
+  .profile__add-btn {
+    width: 282px;
   }
 }
