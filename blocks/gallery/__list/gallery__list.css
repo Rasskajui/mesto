@@ -4,7 +4,7 @@
   list-style-type: none;
   display: grid;
   column-gap: 17px;
-  row-gap: 20px;
+  row-gap: 19px;
   grid-template-columns: repeat(3, 282px);
 }
 
