@@ -5,7 +5,9 @@
   box-sizing: border-box;
   background: transparent;
   border: 1px solid #fff;
-  background: url(../../../images/profile/plus.svg) center no-repeat;
+  background-image: url(../../../images/profile/plus.svg);
+  background-repeat: no-repeat;
+  background-position: center;
   background-size: 22px 22px;
   cursor: pointer;
   transition: all .1s ease-in;
