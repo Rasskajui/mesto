@@ -69,36 +69,32 @@ const deleteCard = (card) => {
   cardList.removeChild(card);
 }
 
-function openPopup() {
-  popup.classList.add('popup_opened');
+const openPopup = (popupName) => {
+  popupName.classList.add('popup_opened');
+}
+
+const closePopup = (popupName) => {
+  popupName.classList.remove('popup_opened');
+}
+
+const openEditPopup = () => {
+  openPopup(popup);
   popupFormNameField.value = userName.textContent;
   popupFormAboutField.value = userAbout.textContent;
 }
 
-function closePopup() {
-  popup.classList.remove('popup_opened');
-}
+editBtn.addEventListener('click', openEditPopup);
 
-editBtn.addEventListener('click', openPopup);
-
-closePopupBtn.addEventListener('click', closePopup);
+closePopupBtn.addEventListener('click', () => closePopup(popup));
 
 function editProfileInfo(evt) {
   evt.preventDefault();
   userName.textContent = popupFormNameField.value;
   userAbout.textContent = popupFormAboutField.value;
-  closePopup();
+  closePopup(popup);
 }
 
 popupForm.addEventListener('submit', editProfileInfo);
-
-const openAddPicturePopup = () => {
-  addPicturePopup.classList.add('popup_opened');
-};
-
-const closeAddPicturePopup = () => {
-  addPicturePopup.classList.remove('popup_opened');
-};
 
 const handleAddPictureSubmit = (evt) => {
   evt.preventDefault();
@@ -114,21 +110,13 @@ const handleAddPictureSubmit = (evt) => {
   cardTitle.value = '';
   cardImageLink.value = '';
 
-  closeAddPicturePopup();
+  closePopup(addPicturePopup);
 }
 
-addBtn.addEventListener('click', openAddPicturePopup);
-closeAddPicturePopupBtn.addEventListener('click', closeAddPicturePopup);
+addBtn.addEventListener('click', () => openPopup(addPicturePopup));
+closeAddPicturePopupBtn.addEventListener('click', () => closePopup(addPicturePopup));
 
 addPicturePopup.addEventListener('submit', handleAddPictureSubmit);
-
-const openPicture = (pic) => {
-  pic.classList.add('popup_opened');
-}
-
-const closePicture = (pic) => {
-  pic.classList.remove('popup_opened');
-}
 
 const viewPicture = (title, image) => {
   const pictureTemplate = document.querySelector('#picture').content.querySelector('.popup_type_open-picture');
@@ -145,10 +133,10 @@ const viewPicture = (title, image) => {
   const page = document.querySelector('.page');
   page.append(picture);
 
-  const timeoutOpen = window.setTimeout(openPicture, 0, picture);
+  const timeoutOpen = window.setTimeout(openPopup, 0, picture);
 
   pictureCloseBtn.addEventListener('click',() => {
-    closePicture(picture);
+    closePopup(picture);
     const timeoutRemove = setTimeout(() => {page.removeChild(picture);}, 300);
   });
 }
