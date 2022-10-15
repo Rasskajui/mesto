@@ -25,48 +25,6 @@
 
     <section class="gallery">
       <ul class="gallery__list">
-        <li class="gallery__element">
-          <img src="./images/gallery/karacheevsk.jpg" alt="Сентинский храм" class="gallery__image">
-          <div class="gallery__image-description">
-            <h2 class="gallery__image-title">Карачаевск</h2>
-            <button type="button" aria-label="Мне нравится" class="gallery__image-like-btn"></button>
-          </div>
-        </li>
-        <li class="gallery__element">
-          <img src="./images/gallery/elbrus.jpg" alt="Закат на Эльбрусе" class="gallery__image">
-          <div class="gallery__image-description">
-            <h2 class="gallery__image-title">Гора Эльбрус</h2>
-            <button type="button" aria-label="Мне нравится" class="gallery__image-like-btn"></button>
-          </div>
-        </li>
-        <li class="gallery__element">
-          <img src="./images/gallery/dombay.jpg" alt="горы Домбая" class="gallery__image">
-          <div class="gallery__image-description">
-            <h2 class="gallery__image-title">Домбай</h2>
-            <button type="button" aria-label="Мне нравится" class="gallery__image-like-btn"></button>
-          </div>
-        </li>
-        <li class="gallery__element">
-          <img src="./images/gallery/elbrus.jpg" alt="Закат на Эльбрусе" class="gallery__image">
-          <div class="gallery__image-description">
-            <h2 class="gallery__image-title">Гора Эльбрус</h2>
-            <button type="button" aria-label="Мне нравится" class="gallery__image-like-btn"></button>
-          </div>
-        </li>
-        <li class="gallery__element">
-          <img src="./images/gallery/dombay.jpg" alt="горы Домбая" class="gallery__image">
-          <div class="gallery__image-description">
-            <h2 class="gallery__image-title">Домбай</h2>
-            <button type="button" aria-label="Мне нравится" class="gallery__image-like-btn"></button>
-          </div>
-        </li>
-        <li class="gallery__element">
-          <img src="./images/gallery/karacheevsk.jpg" alt="Сентинский храм" class="gallery__image">
-          <div class="gallery__image-description">
-            <h2 class="gallery__image-title">Карачаево-Черкессия</h2>
-            <button type="button" aria-label="Мне нравится" class="gallery__image-like-btn"></button>
-          </div>
-        </li>
       </ul>
     </section>
   </main>
@@ -75,7 +33,7 @@
     <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
   </footer>
 
-  <div class="popup">
+  <div class="popup popup_type_edit-profile">
     <div class="popup__container">
       <button type="button" aria-label="Закрыть режим реадктирования профиля" class="popup__close-btn"></button>
       <h2 class="popup__title">Редактировать&nbsp;профиль</h2>
@@ -86,6 +44,28 @@
       </form>
     </div>
   </div>
+
+  <div class="popup popup_type_add-picture">
+    <div class="popup__container">
+      <button type="button" aria-label="Закрыть форму добавления фотографии" class="popup__close-btn"></button>
+      <h2 class="popup__title">Новое&nbsp;место</h2>
+      <form name="profile-form" class="popup__form">
+        <input type="text" name="picture-name" class="popup__form-item popup__form-item_el_card-name" placeholder="Название" required>
+        <input type="text" name="picture-link" class="popup__form-item popup__form-item_el_link" placeholder="Ссылка на картинку" required>
+        <button type="submit" class="popup__save-btn">Создать</button>
+      </form>
+    </div>
+  </div>
+
+  <template id="card">
+    <li class="gallery__element">
+      <img src="./images/gallery/karacheevsk.jpg" alt="Сентинский храм" class="gallery__image">
+      <div class="gallery__image-description">
+        <h2 class="gallery__image-title">Карачаевск</h2>
+        <button type="button" aria-label="Мне нравится" class="gallery__image-like-btn"></button>
+      </div>
+    </li>
+  </template>
 
   <script defer src="./scripts/index.js"></script>
 </body>
