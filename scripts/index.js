@@ -46,12 +46,14 @@ const addCard = (card) => {
   const cardTitle = newCard.querySelector('.gallery__image-title');
   const cardImage = newCard.querySelector('.gallery__image');
   const cardLikeBtn = newCard.querySelector('.gallery__image-like-btn');
+  const cardDeleteBtn = newCard.querySelector('.gallery__delete-image-btn');
 
   cardTitle.textContent = card.name;
   cardImage.src = card.link;
   cardImage.alt = card.name;
 
   cardLikeBtn.addEventListener('click', () => like(cardLikeBtn));
+  cardDeleteBtn.addEventListener('click', () => deleteCard(newCard));
 
   cardList.prepend(newCard);
 }
@@ -60,6 +62,10 @@ initialCards.forEach(addCard);
 
 const like = (likeBtn) => {
   likeBtn.classList.toggle('gallery__image-like-btn_active');
+}
+
+const deleteCard = (card) => {
+  cardList.removeChild(card);
 }
 
 function openPopup() {
@@ -113,4 +119,4 @@ const handleAddPictureSubmit = (evt) => {
 addBtn.addEventListener('click', openAddPicturePopup);
 closeAddPicturePopupBtn.addEventListener('click', closeAddPicturePopup);
 
-addPicturePopup.addEventListener('submit', handleAddPictureSubmit)
+addPicturePopup.addEventListener('submit', handleAddPictureSubmit);
