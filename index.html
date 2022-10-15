@@ -35,7 +35,7 @@
 
   <div class="popup popup_type_edit-profile">
     <div class="popup__container">
-      <button type="button" aria-label="Закрыть режим реадктирования профиля" class="popup__close-btn"></button>
+      <button type="button" aria-label="Закрыть режим реадктирования профиля" class="popup__close-btn close-btn"></button>
       <h2 class="popup__title">Редактировать&nbsp;профиль</h2>
       <form name="profile-form" class="popup__form">
         <input type="text" name="name" class="popup__form-item popup__form-item_el_name" placeholder="Имя пользователя" required>
@@ -47,7 +47,7 @@
 
   <div class="popup popup_type_add-picture">
     <div class="popup__container">
-      <button type="button" aria-label="Закрыть форму добавления фотографии" class="popup__close-btn"></button>
+      <button type="button" aria-label="Закрыть форму добавления фотографии" class="popup__close-btn close-btn"></button>
       <h2 class="popup__title">Новое&nbsp;место</h2>
       <form name="profile-form" class="popup__form">
         <input type="text" name="picture-name" class="popup__form-item popup__form-item_el_card-name" placeholder="Название" required>
@@ -67,6 +67,18 @@
       </div>
     </li>
   </template>
+
+  <template id="picture">
+    <div class="popup popup_type_open-picture">
+      <div class="picture">
+        <button type="button" aria-label="Закрыть фотографию" class="picture__close-btn close-btn"></button>
+        <img src="./images/gallery/Image.jpg" alt="Карачаево-Черкессия" class="picture__image">
+        <h2 class="picture__title">Карачаево-Черкессия</h2>
+      </div>
+    </div>
+  </template>
+
+
 
   <script defer src="./scripts/index.js"></script>
 </body>

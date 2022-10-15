@@ -52,6 +52,7 @@ const addCard = (card) => {
   cardImage.src = card.link;
   cardImage.alt = card.name;
 
+  cardImage.addEventListener('click', () => viewPicture(cardTitle, cardImage));
   cardLikeBtn.addEventListener('click', () => like(cardLikeBtn));
   cardDeleteBtn.addEventListener('click', () => deleteCard(newCard));
 
@@ -120,3 +121,34 @@ addBtn.addEventListener('click', openAddPicturePopup);
 closeAddPicturePopupBtn.addEventListener('click', closeAddPicturePopup);
 
 addPicturePopup.addEventListener('submit', handleAddPictureSubmit);
+
+const openPicture = (pic) => {
+  pic.classList.add('popup_opened');
+}
+
+const closePicture = (pic) => {
+  pic.classList.remove('popup_opened');
+}
+
+const viewPicture = (title, image) => {
+  const pictureTemplate = document.querySelector('#picture').content.querySelector('.popup_type_open-picture');
+  const picture = pictureTemplate.cloneNode(true);
+
+  const pictureImage = picture.querySelector('.picture__image');
+  const pictureTitle = picture.querySelector('.picture__title');
+  const pictureCloseBtn = picture.querySelector('.picture__close-btn');
+
+  pictureImage.src = image.src;
+  pictureImage.alt = image.alt;
+  pictureTitle.textContent = title.textContent;
+
+  const page = document.querySelector('.page');
+  page.append(picture);
+
+  const timeoutOpen = window.setTimeout(openPicture, 0, picture);
+
+  pictureCloseBtn.addEventListener('click',() => {
+    closePicture(picture);
+    const timeoutRemove = setTimeout(() => {page.removeChild(picture);}, 300);
+  });
+}
