@@ -10,6 +10,7 @@ const addBtn = document.querySelector('.profile__add-btn');
 const addPicturePopup = document.querySelector('.popup_type_add-picture');
 const cardTitle = addPicturePopup.querySelector('.popup__form-item_el_card-name');
 const cardImageLink = addPicturePopup.querySelector('.popup__form-item_el_link');
+const addPicPopupSubmitBtn = addPicturePopup.querySelector('.popup__save-btn');
 
 const picturePopup = document.querySelector('.popup_type_open-picture');
 const pictureImage = picturePopup.querySelector('.picture__image');
@@ -121,7 +122,13 @@ const handleAddPictureSubmit = (evt) => {
   closePopup(addPicturePopup);
 }
 
-addBtn.addEventListener('click', () => openPopup(addPicturePopup));
+const handleOpenAddPicturePopup = () => {
+  openPopup(addPicturePopup);
+  disableSubmitBtn(addPicPopupSubmitBtn, 'popup__save-btn_disabled');
+}
+
+addBtn.addEventListener('click', handleOpenAddPicturePopup);
+
 addPicturePopup.addEventListener('submit', handleAddPictureSubmit);
 
 const viewPicture = (title, image) => {
