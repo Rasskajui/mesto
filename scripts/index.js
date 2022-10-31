@@ -80,12 +80,31 @@ const deleteCard = (card) => {
   cardList.removeChild(card);
 }
 
+const handleOutOfPopupClicking = (evt) => {
+  const popupName = evt.currentTarget;
+  const popupContent = popupName.querySelector('.popup__content');
+  if (!popupContent.contains(evt.target)) {
+    closePopup(popupName);
+  }
+}
+
+const handleEscapePressing = (evt) => {
+  const popupName = document.querySelector('.popup_opened');
+  if (evt.key === 'Escape') {
+    closePopup(popupName);
+  }
+}
+
 const openPopup = (popupName) => {
   popupName.classList.add('popup_opened');
+  popupName.addEventListener('click', handleOutOfPopupClicking);
+  document.addEventListener('keydown', handleEscapePressing)
 }
 
 const closePopup = (popupName) => {
   popupName.classList.remove('popup_opened');
+  popupName.removeEventListener('click', handleOutOfPopupClicking);
+  document.removeEventListener('keydown', handleEscapePressing);
 }
 
 closeButtons.forEach((button) => {
