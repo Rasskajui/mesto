@@ -10,7 +10,6 @@
   padding-bottom: 13px;
   cursor: pointer;
   transition: all .1s ease-in;
-  margin-top: calc(48px - 5px);
 }
 
 .popup__save-btn:hover {
@@ -23,6 +22,5 @@
     line-height: 1.21;
     padding-top: 15px;
     padding-bottom: 14px;
-    margin-top: calc(44px - 5px);
   }
 }

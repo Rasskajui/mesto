@@ -5,17 +5,7 @@
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, .2);
   padding-bottom: 9px;
-  margin-top: calc(30px - 5px);
+  margin-bottom: 0;
   outline: 0;
   background-color: transparent;
-}
-
-.popup__form-item:first-of-type {
-  margin-top: 0;
-}
-
-@media screen and (max-width: 665px) {
-  .popup__form-item {
-    margin-top: calc(28px - 5px);
-  }
 }
