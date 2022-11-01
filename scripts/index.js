@@ -89,8 +89,8 @@ const handleOutOfPopupClicking = (evt) => {
 }
 
 const handleEscapePressing = (evt) => {
-  const popupName = document.querySelector('.popup_opened');
   if (evt.key === 'Escape') {
+    const popupName = document.querySelector('.popup_opened');
     closePopup(popupName);
   }
 }
