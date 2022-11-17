@@ -17,10 +17,13 @@ class Card {
   }
 
   _handleImageClick() {
-    const picturePopup = document.querySelector('.popup_type_open-picture')
+    const picturePopup = document.querySelector('.popup_type_open-picture');
+    const picturePopupImage = picturePopup.querySelector('.picture__image');
+
     picturePopup.querySelector('.picture__title').textContent = this._name;
-    picturePopup.querySelector('.picture__image').src = this._link;
-    picturePopup.querySelector('.picture__image').alt = this._name;
+    picturePopupImage.src = this._link;
+    picturePopupImage.alt = this._name;
+    
     this._openPopup(picturePopup);
   }
 
@@ -51,9 +54,11 @@ class Card {
   generateCard() {
     this._element = this._getTemplate();
 
+    const cardImage =  this._element.querySelector('.gallery__image')
+
     this._element.querySelector('.gallery__image-title').textContent = this._name;
-    this._element.querySelector('.gallery__image').src = this._link;
-    this._element.querySelector('.gallery__image').alt = this._name;
+    cardImage.src = this._link;
+    cardImage.alt = this._name;
 
     this._setEventListeners();
 
