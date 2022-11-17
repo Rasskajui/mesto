@@ -2,7 +2,7 @@ import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 import initialCards from './initialCards.js';
 
-const editBtn = document.querySelector('.profile__edit-btn');
+const editionBtn = document.querySelector('.profile__edit-btn');
 const profilePopup = document.querySelector('.popup_type_edit-profile');
 const profilePopupForm = profilePopup.querySelector('.popup__form');
 const profilePopupFormNameField = profilePopupForm.querySelector('.popup__form-item_el_name');
@@ -10,13 +10,12 @@ const profilePopupFormAboutField = profilePopupForm.querySelector('.popup__form-
 const userName = document.querySelector('.profile__name');
 const userAbout = document.querySelector('.profile__about');
 
-const addBtn = document.querySelector('.profile__add-btn');
-const addPicturePopup = document.querySelector('.popup_type_add-picture');
-const cardTitle = addPicturePopup.querySelector('.popup__form-item_el_card-name');
-const cardImageLink = addPicturePopup.querySelector('.popup__form-item_el_link');
-const addPicPopupSubmitBtn = addPicturePopup.querySelector('.popup__save-btn');
+const openingAddPicPopupBtn = document.querySelector('.profile__add-btn');
+const addingPicturePopup = document.querySelector('.popup_type_add-picture');
+const cardTitle = addingPicturePopup.querySelector('.popup__form-item_el_card-name');
+const cardImageLink = addingPicturePopup.querySelector('.popup__form-item_el_link');
 
-const closeButtons = document.querySelectorAll('.popup__close-btn');
+const closingPopupButtons = document.querySelectorAll('.popup__close-btn');
 
 const validationObject = {
   formSelector: '.popup__form',
@@ -28,9 +27,9 @@ const validationObject = {
 }
 
 const profilePopupFormValidator = new FormValidator(validationObject, profilePopup);
-const addPicturePopupFormValidator = new FormValidator(validationObject, addPicturePopup);
+const addingPicturePopupFormValidator = new FormValidator(validationObject, addingPicturePopup);
 
-closeButtons.forEach((button) => {
+closingPopupButtons.forEach((button) => {
   const popup = button.closest('.popup');
   button.addEventListener('click', () => closePopup(popup));
 });
@@ -80,7 +79,7 @@ const openEditPopup = () => {
   profilePopupFormAboutField.value = userAbout.textContent;
 }
 
-editBtn.addEventListener('click', openEditPopup);
+editionBtn.addEventListener('click', openEditPopup);
 
 profilePopupFormValidator.enableValidation();
 
@@ -102,16 +101,16 @@ const handleAddPictureSubmit = (evt) => {
   });
 
   evt.target.reset();
-  closePopup(addPicturePopup);
+  closePopup(addingPicturePopup);
 }
 
 const handleOpenAddPicturePopup = () => {
-  openPopup(addPicturePopup);
-  addPicturePopupFormValidator.disableSubmitBtn();
+  openPopup(addingPicturePopup);
+  addingPicturePopupFormValidator.disableSubmitBtn();
 }
 
-addBtn.addEventListener('click', handleOpenAddPicturePopup);
+openingAddPicPopupBtn.addEventListener('click', handleOpenAddPicturePopup);
 
-addPicturePopupFormValidator.enableValidation();
+addingPicturePopupFormValidator.enableValidation();
 
-addPicturePopup.addEventListener('submit', handleAddPictureSubmit);
+addingPicturePopup.addEventListener('submit', handleAddPictureSubmit);
