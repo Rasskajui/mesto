@@ -130,7 +130,7 @@ const handleAddPictureSubmit = (evt) => {
 
 const handleOpenAddPicturePopup = () => {
   openPopup(addPicturePopup);
-  disableSubmitBtn(addPicPopupSubmitBtn, 'popup__save-btn_disabled');
+  addPicturePopupFormValidator.disableSubmitBtn();
 }
 
 addBtn.addEventListener('click', handleOpenAddPicturePopup);
