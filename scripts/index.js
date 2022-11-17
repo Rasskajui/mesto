@@ -1,3 +1,5 @@
+import Card from './Card.js';
+
 const editBtn = document.querySelector('.profile__edit-btn');
 const profilePopup = document.querySelector('.popup_type_edit-profile');
 const profilePopupForm = profilePopup.querySelector('.popup__form');
@@ -11,12 +13,6 @@ const addPicturePopup = document.querySelector('.popup_type_add-picture');
 const cardTitle = addPicturePopup.querySelector('.popup__form-item_el_card-name');
 const cardImageLink = addPicturePopup.querySelector('.popup__form-item_el_link');
 const addPicPopupSubmitBtn = addPicturePopup.querySelector('.popup__save-btn');
-
-const picturePopup = document.querySelector('.popup_type_open-picture');
-const pictureImage = picturePopup.querySelector('.picture__image');
-const pictureTitle = picturePopup.querySelector('.picture__title');
-
-const closeButtons = document.querySelectorAll('.popup__close-btn');
 
 const initialCards = [
   {
@@ -45,40 +41,12 @@ const initialCards = [
   }
 ];
 
-const cardTemplate = document.querySelector('#card').content.querySelector('.gallery__element');
-const cardList = document.querySelector('.gallery__list');
+const closeButtons = document.querySelectorAll('.popup__close-btn');
 
-function createCard(item) {
-  const cardElement = cardTemplate.cloneNode(true);
-  const cardTitle = cardElement.querySelector('.gallery__image-title');
-  const cardImage = cardElement.querySelector('.gallery__image');
-  const cardLikeBtn = cardElement.querySelector('.gallery__image-like-btn');
-  const cardDeleteBtn = cardElement.querySelector('.gallery__delete-image-btn');
-
-  cardTitle.textContent = item.name;
-  cardImage.src = item.link;
-  cardImage.alt = item.name;
-
-  cardImage.addEventListener('click', () => viewPicture(cardTitle, cardImage));
-  cardLikeBtn.addEventListener('click', () => like(cardLikeBtn));
-  cardDeleteBtn.addEventListener('click', () => deleteCard(cardElement));
-  return cardElement;
-}
-
-const addCard = (card) => {
-  const newCard = createCard(card);
-  cardList.prepend(newCard);
-}
-
-initialCards.forEach(addCard);
-
-const like = (likeBtn) => {
-  likeBtn.classList.toggle('gallery__image-like-btn_active');
-}
-
-const deleteCard = (card) => {
-  cardList.removeChild(card);
-}
+closeButtons.forEach((button) => {
+  const popup = button.closest('.popup');
+  button.addEventListener('click', () => closePopup(popup));
+});
 
 const handleOutOfPopupClicking = (evt) => {
   const popupName = evt.currentTarget;
@@ -107,9 +75,13 @@ const closePopup = (popupName) => {
   document.removeEventListener('keydown', handleEscapePressing);
 }
 
-closeButtons.forEach((button) => {
-  const popup = button.closest('.popup');
-  button.addEventListener('click', () => closePopup(popup));
+const addCard = (cardInfo) => {
+  const newCard = new Card(cardInfo.name, cardInfo.link, '#card', openPopup).generateCard();
+  document.querySelector('.gallery__list').prepend(newCard);
+}
+
+initialCards.forEach((item) => {
+  addCard(item);
 });
 
 const openEditPopup = () => {
@@ -132,6 +104,7 @@ profilePopupForm.addEventListener('submit', editProfileInfo);
 const handleAddPictureSubmit = (evt) => {
   evt.preventDefault();
 
+
   addCard({
     name: `${cardTitle.value}`,
     link: `${cardImageLink.value}`
@@ -149,10 +122,3 @@ const handleOpenAddPicturePopup = () => {
 addBtn.addEventListener('click', handleOpenAddPicturePopup);
 
 addPicturePopup.addEventListener('submit', handleAddPictureSubmit);
-
-const viewPicture = (title, image) => {
-  pictureImage.src = image.src;
-  pictureImage.alt = image.alt;
-  pictureTitle.textContent = title.textContent;
-  openPopup(picturePopup);
-}
