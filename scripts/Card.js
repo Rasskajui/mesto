@@ -23,18 +23,17 @@ class Card {
     picturePopup.querySelector('.picture__title').textContent = this._name;
     picturePopupImage.src = this._link;
     picturePopupImage.alt = this._name;
-    
+
     this._openPopup(picturePopup);
   }
 
   _handleLikePress() {
-    this._element
-    .querySelector('.gallery__image-like-btn')
-    .classList.toggle('gallery__image-like-btn_active');
+    this._likeBtn.classList.toggle('gallery__image-like-btn_active');
   }
 
   _handleDeletePress() {
     this._element.parentNode.removeChild(this._element);
+    this._element = null;
   }
 
   _setEventListeners() {
@@ -42,9 +41,8 @@ class Card {
     .querySelector('.gallery__image')
     .addEventListener('click', () => {this._handleImageClick()});
 
-    this._element
-    .querySelector('.gallery__image-like-btn')
-    .addEventListener('click', () => {this._handleLikePress()});
+    this._likeBtn = this._element.querySelector('.gallery__image-like-btn');
+    this._likeBtn.addEventListener('click', () => {this._handleLikePress()});
 
     this._element
     .querySelector('.gallery__delete-image-btn')

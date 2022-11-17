@@ -1,5 +1,6 @@
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
+import initialCards from './initialCards.js';
 
 const editBtn = document.querySelector('.profile__edit-btn');
 const profilePopup = document.querySelector('.popup_type_edit-profile');
@@ -16,33 +17,6 @@ const cardImageLink = addPicturePopup.querySelector('.popup__form-item_el_link')
 const addPicPopupSubmitBtn = addPicturePopup.querySelector('.popup__save-btn');
 
 const closeButtons = document.querySelectorAll('.popup__close-btn');
-
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
 
 const validationObject = {
   formSelector: '.popup__form',
@@ -88,9 +62,12 @@ const closePopup = (popupName) => {
   document.removeEventListener('keydown', handleEscapePressing);
 }
 
+const createCard = (cardInfo) => {
+  return new Card(cardInfo.name, cardInfo.link, '#card', openPopup).generateCard();
+}
+
 const addCard = (cardInfo) => {
-  const newCard = new Card(cardInfo.name, cardInfo.link, '#card', openPopup).generateCard();
-  document.querySelector('.gallery__list').prepend(newCard);
+  document.querySelector('.gallery__list').prepend(createCard(cardInfo));
 }
 
 initialCards.forEach((item) => {
