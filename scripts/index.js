@@ -1,4 +1,5 @@
 import Card from './Card.js';
+import FormValidator from './FormValidator.js';
 
 const editBtn = document.querySelector('.profile__edit-btn');
 const profilePopup = document.querySelector('.popup_type_edit-profile');
@@ -13,6 +14,8 @@ const addPicturePopup = document.querySelector('.popup_type_add-picture');
 const cardTitle = addPicturePopup.querySelector('.popup__form-item_el_card-name');
 const cardImageLink = addPicturePopup.querySelector('.popup__form-item_el_link');
 const addPicPopupSubmitBtn = addPicturePopup.querySelector('.popup__save-btn');
+
+const closeButtons = document.querySelectorAll('.popup__close-btn');
 
 const initialCards = [
   {
@@ -41,7 +44,17 @@ const initialCards = [
   }
 ];
 
-const closeButtons = document.querySelectorAll('.popup__close-btn');
+const validationObject = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__form-item',
+  submitButtonSelector: '.popup__save-btn',
+  inactiveButtonClass: 'popup__save-btn_disabled',
+  inputErrorClass: 'popup__form-item_invalid',
+  errorClass: 'popup__input-error_visible'
+}
+
+const profilePopupFormValidator = new FormValidator(validationObject, profilePopup);
+const addPicturePopupFormValidator = new FormValidator(validationObject, addPicturePopup);
 
 closeButtons.forEach((button) => {
   const popup = button.closest('.popup');
@@ -92,6 +105,8 @@ const openEditPopup = () => {
 
 editBtn.addEventListener('click', openEditPopup);
 
+profilePopupFormValidator.enableValidation();
+
 function editProfileInfo(evt) {
   evt.preventDefault();
   userName.textContent = profilePopupFormNameField.value;
@@ -103,7 +118,6 @@ profilePopupForm.addEventListener('submit', editProfileInfo);
 
 const handleAddPictureSubmit = (evt) => {
   evt.preventDefault();
-
 
   addCard({
     name: `${cardTitle.value}`,
@@ -120,5 +134,7 @@ const handleOpenAddPicturePopup = () => {
 }
 
 addBtn.addEventListener('click', handleOpenAddPicturePopup);
+
+addPicturePopupFormValidator.enableValidation();
 
 addPicturePopup.addEventListener('submit', handleAddPictureSubmit);
