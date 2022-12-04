@@ -1,6 +1,7 @@
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 import initialCards from './initialCards.js';
+import PopupWithImage from './PopupWithImage.js';
 
 const editionBtn = document.querySelector('.profile__edit-btn');
 const profilePopup = document.querySelector('.popup_type_edit-profile');
@@ -29,25 +30,25 @@ const validationObject = {
 const profilePopupFormValidator = new FormValidator(validationObject, profilePopup);
 const addingPicturePopupFormValidator = new FormValidator(validationObject, addingPicturePopup);
 
-closingPopupButtons.forEach((button) => {
-  const popup = button.closest('.popup');
-  button.addEventListener('click', () => closePopup(popup));
-});
+// closingPopupButtons.forEach((button) => {
+//   const popup = button.closest('.popup');
+//   button.addEventListener('click', () => closePopup(popup));
+// });
 
-const handleOutOfPopupClicking = (evt) => {
-  const popupName = evt.currentTarget;
-  const popupContent = popupName.querySelector('.popup__content');
-  if (!popupContent.contains(evt.target)) {
-    closePopup(popupName);
-  }
-}
+// const handleOutOfPopupClicking = (evt) => {
+//   const popupName = evt.currentTarget;
+//   const popupContent = popupName.querySelector('.popup__content');
+//   if (!popupContent.contains(evt.target)) {
+//     closePopup(popupName);
+//   }
+// }
 
-const handleEscapePressing = (evt) => {
-  if (evt.key === 'Escape') {
-    const popupName = document.querySelector('.popup_opened');
-    closePopup(popupName);
-  }
-}
+// const handleEscapePressing = (evt) => {
+//   if (evt.key === 'Escape') {
+//     const popupName = document.querySelector('.popup_opened');
+//     closePopup(popupName);
+//   }
+// }
 
 const openPopup = (popupName) => {
   popupName.classList.add('popup_opened');
@@ -61,8 +62,13 @@ const closePopup = (popupName) => {
   document.removeEventListener('keydown', handleEscapePressing);
 }
 
+function handleCardClick(link, name) {
+  const popupWithImage = new PopupWithImage('.popup_type_open-picture', link, name);
+  popupWithImage.open();
+}
+
 const createCard = (cardInfo) => {
-  return new Card(cardInfo.name, cardInfo.link, '#card', openPopup).generateCard();
+  return new Card(cardInfo.name, cardInfo.link, '#card', () => {handleCardClick(cardInfo.link, cardInfo.name)}).generateCard();
 }
 
 const addCard = (cardInfo) => {

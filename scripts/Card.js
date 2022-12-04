@@ -1,9 +1,9 @@
 class Card {
-  constructor(name, link, cardTemplateSelector, openPopup) {
+  constructor(name, link, cardTemplateSelector, handleCardClick) {
     this._name = name;
     this._link = link;
     this._cardTemplateSelector = cardTemplateSelector;
-    this._openPopup = openPopup;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -14,17 +14,6 @@ class Card {
     .cloneNode(true);
 
     return cardElement;
-  }
-
-  _handleImageClick() {
-    const picturePopup = document.querySelector('.popup_type_open-picture');
-    const picturePopupImage = picturePopup.querySelector('.picture__image');
-
-    picturePopup.querySelector('.picture__title').textContent = this._name;
-    picturePopupImage.src = this._link;
-    picturePopupImage.alt = this._name;
-
-    this._openPopup(picturePopup);
   }
 
   _handleLikePress() {
@@ -39,7 +28,7 @@ class Card {
   _setEventListeners() {
     this._element
     .querySelector('.gallery__image')
-    .addEventListener('click', () => {this._handleImageClick()});
+  .addEventListener('click', this._handleCardClick);
 
     this._likeBtn = this._element.querySelector('.gallery__image-like-btn');
     this._likeBtn.addEventListener('click', () => {this._handleLikePress()});
