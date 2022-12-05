@@ -4,6 +4,7 @@ import initialCards from '../utils/initialCards.js';
 import PopupWithForm from '../components/PopupWithForm copy.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
+import Section from '../components/Section.js';
 
 const editionBtn = document.querySelector('.profile__edit-btn');
 const openingAddPicPopupBtn = document.querySelector('.profile__add-btn');
@@ -24,23 +25,28 @@ const userInfo = new UserInfo('.profile__name', '.profile__about');
 const profilePopupFormValidator = new FormValidator(validationObject, ProfileEditionPopup.popup);
 const addingPicturePopupFormValidator = new FormValidator(validationObject, addingPicturePopup.popup);
 
+const renderCard = (cardInfo) => {
+  const newCard = new Card(cardInfo.name, cardInfo.link, '#card', () => {
+    handleCardClick(cardInfo.link, cardInfo.name)
+  }).generateCard();
+  cardSection.addItem(newCard);
+}
+
+const cardSection = new Section(
+  {
+    items: initialCards,
+    renderer: renderCard
+  },
+  '.gallery__list'
+);
+
+cardSection.renderItems();
+
 function handleCardClick(link, name) {
   const popupWithImage = new PopupWithImage('.popup_type_open-picture', link, name);
   popupWithImage.open();
   popupWithImage.setEventListeners();
 }
-
-const createCard = (cardInfo) => {
-  return new Card(cardInfo.name, cardInfo.link, '#card', () => {handleCardClick(cardInfo.link, cardInfo.name)}).generateCard();
-}
-
-const addCard = (cardInfo) => {
-  document.querySelector('.gallery__list').prepend(createCard(cardInfo));
-}
-
-initialCards.forEach((item) => {
-  addCard(item);
-});
 
 function handleEditProfileSubmit(evt) {
    evt.preventDefault();
@@ -66,10 +72,10 @@ function handleAddPictureSubmit(evt) {
 
   const inputValues = addingPicturePopup.getInputValues();
 
-  addCard({
+  renderCard({
     name: `${inputValues[0]}`,
     link: `${inputValues[1]}`
-  });
+  })
 
   evt.target.reset();
   addingPicturePopup.close();
