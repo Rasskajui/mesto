@@ -1,9 +1,9 @@
-import Card from './Card.js';
-import FormValidator from './FormValidator.js';
-import initialCards from './initialCards.js';
-import PopupWithForm from './PopupWithForm copy.js';
-import PopupWithImage from './PopupWithImage.js';
-import UserInfo from './UserInfo.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import initialCards from '../utils/initialCards.js';
+import PopupWithForm from '../components/PopupWithForm copy.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import UserInfo from '../components/UserInfo.js';
 
 const editionBtn = document.querySelector('.profile__edit-btn');
 const openingAddPicPopupBtn = document.querySelector('.profile__add-btn');
@@ -73,7 +73,6 @@ function handleAddPictureSubmit(evt) {
 
   evt.target.reset();
   addingPicturePopup.close();
-  console.log('handle add pic submit');
 }
 
 const handleOpenAddPicturePopup = () => {
