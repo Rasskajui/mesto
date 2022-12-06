@@ -21,14 +21,12 @@ class Card {
   }
 
   _handleDeletePress() {
-    this._element.parentNode.removeChild(this._element);
+    this._element.remove();
     this._element = null;
   }
 
   _setEventListeners() {
-    this._element
-    .querySelector('.gallery__image')
-  .addEventListener('click', this._handleCardClick);
+    this._image.addEventListener('click', this._handleCardClick);
 
     this._likeBtn = this._element.querySelector('.gallery__image-like-btn');
     this._likeBtn.addEventListener('click', () => {this._handleLikePress()});
@@ -41,11 +39,12 @@ class Card {
   generateCard() {
     this._element = this._getTemplate();
 
-    const cardImage =  this._element.querySelector('.gallery__image')
+    this._image = this._element.querySelector('.gallery__image');
+
 
     this._element.querySelector('.gallery__image-title').textContent = this._name;
-    cardImage.src = this._link;
-    cardImage.alt = this._name;
+    this._image.src = this._link;
+    this._image.alt = this._name;
 
     this._setEventListeners();
 

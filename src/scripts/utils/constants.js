@@ -25,4 +25,16 @@ const initialCards = [
   }
 ];
 
-export default initialCards;
+const editionBtn = document.querySelector('.profile__edit-btn');
+const openingAddPicPopupBtn = document.querySelector('.profile__add-btn');
+
+const validationObject = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__form-item',
+  submitButtonSelector: '.popup__save-btn',
+  inactiveButtonClass: 'popup__save-btn_disabled',
+  inputErrorClass: 'popup__form-item_invalid',
+  errorClass: 'popup__input-error_visible'
+}
+
+export {initialCards, editionBtn, openingAddPicPopupBtn, validationObject};
