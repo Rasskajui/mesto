@@ -50,6 +50,7 @@ function handleEditProfileSubmit(data) {
 
 const openEditPopup = () => {
   profileEditionPopup.setInputValues(userInfo.getUserInfo());
+  profilePopupFormValidator.resetValidation();
   profileEditionPopup.open();
 }
 
@@ -66,6 +67,7 @@ function handleAddPictureSubmit(formData) {
 }
 
 const handleOpenAddPicturePopup = () => {
+  addingPicturePopupFormValidator.resetValidation();
   addingPicturePopup.open();
   addingPicturePopupFormValidator.disableSubmitBtn();
 }

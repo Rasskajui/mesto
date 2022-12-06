@@ -49,6 +49,14 @@ class FormValidator {
     this._checkButton();
   }
 
+  resetValidation() {
+    this._checkButton();
+    this._inputArr.forEach((inputElement) => {
+      const errorElement = this._formElement.querySelector(`.input-error-${inputElement.name}`);
+      this._hideError(errorElement, inputElement);
+    });
+  }
+
   enableValidation() {
     this._inputArr = Array.from(this._formElement.querySelectorAll(this._validationObject.inputSelector));
     this._submitBtn = this._formElement.querySelector(this._validationObject.submitButtonSelector);
