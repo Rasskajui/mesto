@@ -37,4 +37,8 @@ const validationObject = {
   errorClass: 'popup__input-error_visible'
 }
 
-export {initialCards, editionBtn, openingAddPicPopupBtn, validationObject};
+const userName = document.querySelector('.profile__name');
+const userAbout = document.querySelector('.profile__about');
+const userAvatar = document.querySelector('.profile__avatar');
+
+export {initialCards, editionBtn, openingAddPicPopupBtn, validationObject, userName, userAbout, userAvatar};

@@ -5,8 +5,41 @@ import PopupWithForm from '../scripts/components/PopupWithForm.js';
 import PopupWithImage from '../scripts/components/PopupWithImage.js';
 import UserInfo from '../scripts/components/UserInfo.js';
 import Section from '../scripts/components/Section.js';
-import {initialCards, editionBtn, openingAddPicPopupBtn, validationObject} from '../scripts/utils/constants.js'
+import Api from '../scripts/components/Api.js';
+import {editionBtn, openingAddPicPopupBtn, validationObject, userName, userAbout, userAvatar} from '../scripts/utils/constants.js'
 
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-56',
+  headers: {
+    authorization: '2f1089fd-d72d-4f9a-94ac-821334db37b8',
+    'Content-Type': 'application/json'
+  }
+});
+
+api.getUserInfo()
+.then((userInfo) => {
+  userName.textContent = userInfo.name;
+  userAbout.textContent = userInfo.about;
+  userAvatar.src = userInfo.avatar;
+});
+
+api.getCards()
+  .then((data) => {
+    return data.map((card) => ({name: card.name, link: card.link}));
+  })
+  .then((cardsInfo) => {
+    return new Section(
+      {
+        items: cardsInfo,
+        renderer: (cardInfo) => {
+          const newCard = createCard(cardInfo);
+          cardSection.addItem(newCard);
+        }
+      },
+      '.gallery__list'
+    );
+  })
+  .then(section => section.renderItems());
 
 const profileEditionPopup = new PopupWithForm('.popup_type_edit-profile', handleEditProfileSubmit);
 const addingPicturePopup = new PopupWithForm('.popup_type_add-picture', handleAddPictureSubmit);
@@ -28,7 +61,7 @@ const renderCard = (cardInfo) => {
 
 const cardSection = new Section(
   {
-    items: initialCards,
+    items: [],
     renderer: renderCard
   },
   '.gallery__list'
@@ -46,6 +79,7 @@ function handleCardClick(link, name) {
 
 function handleEditProfileSubmit(data) {
    userInfo.setUserInfo(data.name, data.about);
+   api.updateUserInfo(data.name, data.about);
 }
 
 const openEditPopup = () => {
