@@ -94,10 +94,12 @@ profileEditionPopup.setEventListeners();
 profilePopupFormValidator.enableValidation();
 
 function handleAddPictureSubmit(formData) {
-  renderCard({
+  const newCardInfo = {
     name: formData['picture-name'],
     link: formData['picture-link']
-  })
+  }
+  renderCard(newCardInfo);
+  api.addCard(newCardInfo);
 }
 
 const handleOpenAddPicturePopup = () => {

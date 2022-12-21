@@ -36,6 +36,19 @@ class Api {
       })
     });
   }
+
+  addCard(cardInfo) {
+    fetch(`${this.baseUrl}/cards`, {
+      method: 'POST',
+      headers: this.headers,
+      body: JSON.stringify({
+        name: cardInfo.name,
+        link: cardInfo.link
+      })
+    });
+  }
+
+
 }
 
 export default Api;
