@@ -66,7 +66,10 @@
       <button type="button" aria-label="Удалить картинку" class="gallery__delete-image-btn"></button>
       <div class="gallery__image-description">
         <h2 class="gallery__image-title">Карачаевск</h2>
-        <button type="button" aria-label="Мне нравится" class="gallery__image-like-btn"></button>
+        <div class="gallery__like">
+          <button type="button" aria-label="Мне нравится" class="gallery__image-like-btn"></button>
+          <p class="gallery__number-of-likes">0</p>
+        </div>
       </div>
     </li>
   </template>
@@ -78,5 +81,14 @@
       <h2 class="picture__title">Карачаево-Черкессия</h2>
     </div>
   </div>
+
+  <div class="popup popup_type_delete-card">
+    <div class="popup__container popup__content">
+      <button type="button" aria-label="Закрыть модальное окно" class="popup__close-btn picture__close-btn close-btn"></button>
+      <h2 class="popup__title popup__title_small-margin-bottom">Вы&nbsp;уверены?</h2>
+      <button type="submit" class="popup__save-btn popup__save-btn_size_large">Да</button>
+    </div>
+  </div>
+
 </body>
 </html>

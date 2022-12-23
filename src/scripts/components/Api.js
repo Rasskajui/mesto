@@ -48,6 +48,33 @@ class Api {
     });
   }
 
+  deleteCard(cardId) {
+    fetch(`${this.baseUrl}/cards/${cardId}`, {
+      method: 'DELETE',
+      headers: this.headers
+    })
+  }
+
+  likeCard(card, user) {
+    fetch(`${this.baseUrl}/cards/${card._id}/likes`, {
+      method: 'PUT',
+      headers: this.headers,
+      body: JSON.stringify({
+        likes: card.push(user)
+      })
+    });
+  }
+
+  removeLike(card) {
+    fetch(`${this.baseUrl}/cards/${card._id}/likes`, {
+      method: 'DELETE',
+      headers: this.headers,
+      body: JSON.stringify({
+        //likes:
+      })
+    });
+  }
+
 
 }
 

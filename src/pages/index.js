@@ -3,10 +3,22 @@ import Card from '../scripts/components/Card.js';
 import FormValidator from '../scripts/components/FormValidator.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
 import PopupWithImage from '../scripts/components/PopupWithImage.js';
+import PopupConfirm from '../scripts/components/PopupConfirm';
 import UserInfo from '../scripts/components/UserInfo.js';
 import Section from '../scripts/components/Section.js';
 import Api from '../scripts/components/Api.js';
-import {editionBtn, openingAddPicPopupBtn, validationObject, userName, userAbout, userAvatar} from '../scripts/utils/constants.js'
+import {editionBtn, openingAddPicPopupBtn, validationObject, userAvatar} from '../scripts/utils/constants.js'
+
+const profileEditionPopup = new PopupWithForm('.popup_type_edit-profile', handleEditProfileSubmit);
+const addingPicturePopup = new PopupWithForm('.popup_type_add-picture', handleAddPictureSubmit);
+
+const deleteCardPopup = new PopupConfirm('.popup_type_delete-card', handleDeleteCardSubmit);
+deleteCardPopup.setEventListeners();
+
+const userInfo = new UserInfo('.profile__name', '.profile__about');
+
+const profilePopupFormValidator = new FormValidator(validationObject, profileEditionPopup.popup);
+const addingPicturePopupFormValidator = new FormValidator(validationObject, addingPicturePopup.popup);
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-56',
@@ -17,15 +29,20 @@ const api = new Api({
 });
 
 api.getUserInfo()
-.then((userInfo) => {
-  userName.textContent = userInfo.name;
-  userAbout.textContent = userInfo.about;
-  userAvatar.src = userInfo.avatar;
+.then((user) => {
+  userInfo.setUserInfo(`${user.name}`, `${user.about}`);
+  userAvatar.src = user.avatar;
 });
 
 api.getCards()
   .then((data) => {
-    return data.map((card) => ({name: card.name, link: card.link}));
+    return data.map((card) => ({
+      name: card.name,
+      link: card.link,
+      likes: card.likes.length,
+      owner: card.owner.name,
+      id: card._id
+    }));
   })
   .then((cardsInfo) => {
     return new Section(
@@ -41,17 +58,18 @@ api.getCards()
   })
   .then(section => section.renderItems());
 
-const profileEditionPopup = new PopupWithForm('.popup_type_edit-profile', handleEditProfileSubmit);
-const addingPicturePopup = new PopupWithForm('.popup_type_add-picture', handleAddPictureSubmit);
-const userInfo = new UserInfo('.profile__name', '.profile__about');
-
-const profilePopupFormValidator = new FormValidator(validationObject, profileEditionPopup.popup);
-const addingPicturePopupFormValidator = new FormValidator(validationObject, addingPicturePopup.popup);
-
 const createCard = (cardInfo) => {
-  return new Card(cardInfo.name, cardInfo.link, '#card', () => {
-    handleCardClick(cardInfo.link, cardInfo.name)
-  }).generateCard();
+  return new Card(
+    cardInfo.name,
+    cardInfo.link,
+    cardInfo.likes,
+    cardInfo.id,
+    cardInfo.owner === userInfo.getUserInfo().name,
+    '#card',
+    () => {handleCardClick(cardInfo.link, cardInfo.name)},
+    (card) => {handleDeleteCardClick(card)},
+    )
+    .generateCard();
 }
 
 const renderCard = (cardInfo) => {
@@ -77,6 +95,15 @@ function handleCardClick(link, name) {
   popupWithImage.open(link, name);
 }
 
+function handleDeleteCardClick(card) {
+  deleteCardPopup.open(card);
+}
+
+function handleDeleteCardSubmit(card) {
+  card.deleteCard();
+  api.deleteCard(card._id);
+}
+
 function handleEditProfileSubmit(data) {
    userInfo.setUserInfo(data.name, data.about);
    api.updateUserInfo(data.name, data.about);
@@ -96,7 +123,9 @@ profilePopupFormValidator.enableValidation();
 function handleAddPictureSubmit(formData) {
   const newCardInfo = {
     name: formData['picture-name'],
-    link: formData['picture-link']
+    link: formData['picture-link'],
+    owner: userInfo.getUserInfo().name,
+    likes: 0
   }
   renderCard(newCardInfo);
   api.addCard(newCardInfo);
