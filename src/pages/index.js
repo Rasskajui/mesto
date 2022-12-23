@@ -33,10 +33,13 @@ const api = new Api({
   }
 });
 
+const data = {};
+
 api.getUserInfo()
 .then((user) => {
   userInfo.setUserInfo(`${user.name}`, `${user.about}`);
   userAvatar.src = user.avatar;
+  data.userId = user._id;
 });
 
 api.getCards()
@@ -45,7 +48,7 @@ api.getCards()
       name: card.name,
       link: card.link,
       likes: card.likes,
-      owner: card.owner.name,
+      owner: card.owner._id,
       id: card._id,
     }));
   })
@@ -69,7 +72,7 @@ const createCard = (cardInfo) => {
     cardInfo.link,
     cardInfo.likes,
     cardInfo.id,
-    cardInfo.owner === userInfo.getUserInfo().name,
+    cardInfo.owner === data.userId,
     userInfo.getUserInfo().name,
     '#card',
     () => {handleCardClick(cardInfo.link, cardInfo.name)},
@@ -111,8 +114,11 @@ function handleDeleteCardSubmit(card) {
 }
 
 function handleEditProfileSubmit(data) {
-   userInfo.setUserInfo(data.name, data.about);
-   api.updateUserInfo(data.name, data.about);
+  profileEditionPopup.renderLoading(true);
+  userInfo.setUserInfo(data.name, data.about);
+  api.updateUserInfo(data.name, data.about).finally(() => {
+    profileEditionPopup.renderLoading(false);
+  });;
 }
 
 const openEditPopup = () => {
@@ -127,14 +133,17 @@ profileEditionPopup.setEventListeners();
 profilePopupFormValidator.enableValidation();
 
 function handleAddPictureSubmit(formData) {
+  addingPicturePopup.renderLoading(true);
   const newCardInfo = {
     name: formData['picture-name'],
     link: formData['picture-link'],
-    owner: userInfo.getUserInfo().name,
+    owner: data.userId,
     likes: 0
   }
   renderCard(newCardInfo);
-  api.addCard(newCardInfo);
+  api.addCard(newCardInfo).finally(() => {
+    addingPicturePopup.renderLoading(false);
+  });;
 }
 
 const handleOpenAddPicturePopup = () => {
@@ -148,9 +157,11 @@ addingPicturePopup.setEventListeners();
 addingPicturePopupFormValidator.enableValidation();
 
 function handleUpdateAvatarSubmit(data) {
+  updatingAvatarPopup.renderLoading(true);
   userAvatar.src = data.avatar;
-  updatingAvatarPopup.close();
-  api.updateAvatar(data.avatar);
+  api.updateAvatar(data.avatar).finally(() => {
+    updatingAvatarPopup.renderLoading(false);
+  });
 }
 
 openingAvatarPopupBtn.addEventListener('click', () => {

@@ -27,7 +27,7 @@ class Api {
   }
 
   updateUserInfo(newName, newAbout) {
-    fetch(`${this.baseUrl}/users/me`, {
+    return fetch(`${this.baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this.headers,
       body: JSON.stringify({
@@ -38,7 +38,7 @@ class Api {
   }
 
   addCard(cardInfo) {
-    fetch(`${this.baseUrl}/cards`, {
+    return fetch(`${this.baseUrl}/cards`, {
       method: 'POST',
       headers: this.headers,
       body: JSON.stringify({
@@ -76,7 +76,7 @@ class Api {
   }
 
   updateAvatar(avatarUrl) {
-    fetch(`${this.baseUrl}/users/me/avatar`, {
+    return fetch(`${this.baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this.headers,
       body: JSON.stringify({

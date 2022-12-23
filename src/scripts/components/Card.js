@@ -10,7 +10,7 @@ class Card {
     this._handleDeleteCardClick = handleDeleteCardClick;
 
     this._user = user;
-    this._isLiked = this._likes.some((user) => user.name === this._user);
+    // this._isLiked = this._likes.some((user) => user.name === this._user);
   }
 
   _getTemplate() {
@@ -58,9 +58,9 @@ class Card {
     this._image.src = this._link;
     this._image.alt = this._name;
 
-    this._likesCounter = this._element.querySelector('.gallery__number-of-likes');
-    this._likesCounter.textContent = `${this._likes.length}`;
-    if (this._isLiked) this._likeBtn.classList.add('gallery__image-like-btn_active')
+    // this._likesCounter = this._element.querySelector('.gallery__number-of-likes');
+    // this._likesCounter.textContent = `${this._likes.length}`;
+    // if (this._isLiked) this._likeBtn.classList.add('gallery__image-like-btn_active')
 
     this._setEventListeners();
 
