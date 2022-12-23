@@ -1,13 +1,16 @@
 class Card {
-  constructor(name, link, likes, id, isMine, cardTemplateSelector, handleCardClick, handleDeleteCardClick) {
+  constructor(name, link, likes, id, isMine, user, cardTemplateSelector, handleCardClick, handleDeleteCardClick) {
     this._name = name;
     this._link = link;
     this._likes = likes;
-    this._id = id;
+    this.id = id;
     this._isMine = isMine;
     this._cardTemplateSelector = cardTemplateSelector;
     this._handleCardClick = handleCardClick;
     this._handleDeleteCardClick = handleDeleteCardClick;
+
+    this._user = user;
+    this._isLiked = this._likes.some((user) => user.name === this._user);
   }
 
   _getTemplate() {
@@ -24,8 +27,7 @@ class Card {
   }
 
   _handleLikePress() {
-    this._likeBtn.classList.toggle('gallery__image-like-btn_active');
-    this._likes += 1;
+    // this._likeBtn.classList.toggle('gallery__image-like-btn_active');
   }
 
   deleteCard() {
@@ -55,7 +57,10 @@ class Card {
     this._element.querySelector('.gallery__image-title').textContent = this._name;
     this._image.src = this._link;
     this._image.alt = this._name;
-    this._element.querySelector('.gallery__number-of-likes').textContent = `${this._likes}`;
+
+    this._likesCounter = this._element.querySelector('.gallery__number-of-likes');
+    this._likesCounter.textContent = `${this._likes.length}`;
+    if (this._isLiked) this._likeBtn.classList.add('gallery__image-like-btn_active')
 
     this._setEventListeners();
 

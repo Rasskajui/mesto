@@ -13,7 +13,10 @@
 
   <main class="main">
     <section class="profile">
-      <img src="<%=require('./images/profile/profile-pic.jpg')%>" alt="Аватарка" class="profile__avatar">
+      <div class="profile__avatar-container">
+        <img src="<%=require('./images/profile/profile-pic.jpg')%>" alt="Аватарка" class="profile__avatar">
+        <button type="button" class="profile__avatar-overlay"></button>
+      </div>
       <div class="profile__info">
         <h1 class="profile__name">Жак-Ив Кусто</h1>
         <button type="button" aria-label="Редактировать профиль" class="profile__edit-btn button"></button>
@@ -87,6 +90,18 @@
       <button type="button" aria-label="Закрыть модальное окно" class="popup__close-btn picture__close-btn close-btn"></button>
       <h2 class="popup__title popup__title_small-margin-bottom">Вы&nbsp;уверены?</h2>
       <button type="submit" class="popup__save-btn popup__save-btn_size_large">Да</button>
+    </div>
+  </div>
+
+  <div class="popup popup_type_change-avatar">
+    <div class="popup__container popup__content">
+      <button type="button" aria-label="Закрыть форму изменения аватарки" class="popup__close-btn close-btn"></button>
+      <h2 class="popup__title">Обновить&nbsp;аватар</h2>
+      <form name="profile-form" class="popup__form" novalidate>
+        <input type="url" name="avatar" class="popup__form-item popup__form-item_el_link" placeholder="Ссылка на картинку" required>
+        <span class="popup__input-error input-error-avatar"></span>
+        <button type="submit" class="popup__save-btn">Сохранить</button>
+      </form>
     </div>
   </div>
 

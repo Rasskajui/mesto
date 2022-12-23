@@ -27,6 +27,7 @@ const initialCards = [
 
 const editionBtn = document.querySelector('.profile__edit-btn');
 const openingAddPicPopupBtn = document.querySelector('.profile__add-btn');
+const openingAvatarPopupBtn = document.querySelector('.profile__avatar-overlay');
 
 const validationObject = {
   formSelector: '.popup__form',
@@ -41,4 +42,4 @@ const userName = document.querySelector('.profile__name');
 const userAbout = document.querySelector('.profile__about');
 const userAvatar = document.querySelector('.profile__avatar');
 
-export {initialCards, editionBtn, openingAddPicPopupBtn, validationObject, userName, userAbout, userAvatar};
+export {initialCards, editionBtn, openingAddPicPopupBtn, openingAvatarPopupBtn, validationObject, userName, userAbout, userAvatar};

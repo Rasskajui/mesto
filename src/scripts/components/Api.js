@@ -75,6 +75,15 @@ class Api {
     });
   }
 
+  updateAvatar(avatarUrl) {
+    fetch(`${this.baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this.headers,
+      body: JSON.stringify({
+        avatar: avatarUrl
+      })
+    })
+  }
 
 }
 
