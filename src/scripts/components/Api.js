@@ -34,6 +34,9 @@ class Api {
         name: newName,
         about: newAbout
       })
+    })
+    .catch((err) => {
+      console.log(`Ошибка: ${err}`);
     });
   }
 
@@ -45,6 +48,9 @@ class Api {
         name: cardInfo.name,
         link: cardInfo.link
       })
+    })
+    .catch((err) => {
+      console.log(`Ошибка: ${err}`);
     });
   }
 
@@ -53,25 +59,31 @@ class Api {
       method: 'DELETE',
       headers: this.headers
     })
-  }
-
-  likeCard(card, user) {
-    fetch(`${this.baseUrl}/cards/${card._id}/likes`, {
-      method: 'PUT',
-      headers: this.headers,
-      body: JSON.stringify({
-        likes: card.push(user)
-      })
+    .then(res => res.json())
+    .catch((err) => {
+      console.log(`Ошибка: ${err}`);
     });
   }
 
-  removeLike(card) {
-    fetch(`${this.baseUrl}/cards/${card._id}/likes`, {
+  likeCard(cardId) {
+    return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
+      method: 'PUT',
+      headers: this.headers,
+    })
+    .then(res => res.json())
+    .catch((err) => {
+      console.log(`Ошибка: ${err}`);
+    });
+  }
+
+  removeLike(cardId) {
+    return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
       method: 'DELETE',
       headers: this.headers,
-      body: JSON.stringify({
-        //likes:
-      })
+    })
+    .then(res => res.json())
+    .catch((err) => {
+      console.log(`Ошибка: ${err}`);
     });
   }
 
@@ -83,6 +95,9 @@ class Api {
         avatar: avatarUrl
       })
     })
+    .catch((err) => {
+      console.log(`Ошибка: ${err}`);
+    });
   }
 
 }

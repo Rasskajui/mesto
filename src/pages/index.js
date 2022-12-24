@@ -40,6 +40,10 @@ api.getUserInfo()
   userInfo.setUserInfo(`${user.name}`, `${user.about}`);
   userAvatar.src = user.avatar;
   data.userId = user._id;
+  data.user = user;
+})
+.catch((err) => {
+  console.log(`Ошибка: ${err}`);
 });
 
 api.getCards()
@@ -48,7 +52,7 @@ api.getCards()
       name: card.name,
       link: card.link,
       likes: card.likes,
-      owner: card.owner._id,
+      ownerId: card.owner._id,
       id: card._id,
     }));
   })
@@ -64,21 +68,43 @@ api.getCards()
       '.gallery__list'
     );
   })
-  .then(section => section.renderItems());
+  .then(section => section.renderItems())
+  .catch((err) => {
+    console.log(`Ошибка: ${err}`);
+  });
 
 const createCard = (cardInfo) => {
-  return new Card(
+  const card = new Card(
     cardInfo.name,
     cardInfo.link,
-    cardInfo.likes,
     cardInfo.id,
-    cardInfo.owner === data.userId,
-    userInfo.getUserInfo().name,
+    cardInfo.likes,
+    cardInfo.ownerId === data.userId,
+    data.userId,
     '#card',
     () => {handleCardClick(cardInfo.link, cardInfo.name)},
-    (card) => {handleDeleteCardClick(card)},
+    () => {deletingCardPopup.open(card)},
+    (isLiked) => {
+      if (!isLiked) {
+        api.likeCard(cardInfo.id)
+        .then((data) => {
+          card.updateLikes(data.likes);
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+        });
+      } else {
+        api.removeLike(cardInfo.id)
+        .then((data) => {
+          card.updateLikes(data.likes);
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+        });
+      }
+    }
     )
-    .generateCard();
+    return card.generateCard();
 }
 
 const renderCard = (cardInfo) => {
@@ -102,10 +128,6 @@ popupWithImage.setEventListeners();
 
 function handleCardClick(link, name) {
   popupWithImage.open(link, name);
-}
-
-function handleDeleteCardClick(card) {
-  deletingCardPopup.open(card);
 }
 
 function handleDeleteCardSubmit(card) {
@@ -137,13 +159,27 @@ function handleAddPictureSubmit(formData) {
   const newCardInfo = {
     name: formData['picture-name'],
     link: formData['picture-link'],
-    owner: data.userId,
-    likes: 0
   }
-  renderCard(newCardInfo);
-  api.addCard(newCardInfo).finally(() => {
+  api.addCard(newCardInfo)
+  .then(res => res.json())
+  .then(res => {
+    return createCard({
+      name: res.name,
+      link: res.link,
+      likes: res.likes,
+      ownerId: data.userId,
+      id: res._id,
+    });
+  })
+  .then(card => {
+    cardSection.addItem(card);
+  })
+  .finally(() => {
     addingPicturePopup.renderLoading(false);
-  });;
+  })
+  .catch((err) => {
+    console.log(`Ошибка: ${err}`);
+  });
 }
 
 const handleOpenAddPicturePopup = () => {

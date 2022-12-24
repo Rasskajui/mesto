@@ -1,5 +1,5 @@
 class Card {
-  constructor(name, link, likes, id, isMine, user, cardTemplateSelector, handleCardClick, handleDeleteCardClick) {
+  constructor(name, link, id, likes, isMine, userId, cardTemplateSelector, handleCardClick, handleDeleteCardClick, handleLikePress) {
     this._name = name;
     this._link = link;
     this._likes = likes;
@@ -9,8 +9,8 @@ class Card {
     this._handleCardClick = handleCardClick;
     this._handleDeleteCardClick = handleDeleteCardClick;
 
-    this._user = user;
-    // this._isLiked = this._likes.some((user) => user.name === this._user);
+    this._userId = userId;
+    this._handleLikePress = handleLikePress;
   }
 
   _getTemplate() {
@@ -26,8 +26,18 @@ class Card {
     return cardElement;
   }
 
-  _handleLikePress() {
-    // this._likeBtn.classList.toggle('gallery__image-like-btn_active');
+  isLiked() {
+    return this._likes.some((like) => like._id === this._userId);
+  }
+
+  _updateLikesView() {
+    this._likesCounter.textContent = this._likes.length;
+    this._likeBtn.classList.toggle('gallery__image-like-btn_active', this.isLiked());
+  }
+
+  updateLikes(likes) {
+    this._likes = likes;
+    this._updateLikesView();
   }
 
   deleteCard() {
@@ -37,9 +47,7 @@ class Card {
 
   _setEventListeners() {
     this._image.addEventListener('click', this._handleCardClick);
-
-    this._likeBtn = this._element.querySelector('.gallery__image-like-btn');
-    this._likeBtn.addEventListener('click', () => {this._handleLikePress()});
+    this._likeBtn.addEventListener('click', () => {this._handleLikePress(this.isLiked())});
 
     if (this._isMine){
       this._element
@@ -58,9 +66,10 @@ class Card {
     this._image.src = this._link;
     this._image.alt = this._name;
 
-    // this._likesCounter = this._element.querySelector('.gallery__number-of-likes');
-    // this._likesCounter.textContent = `${this._likes.length}`;
-    // if (this._isLiked) this._likeBtn.classList.add('gallery__image-like-btn_active')
+    this._likesCounter = this._element.querySelector('.gallery__number-of-likes');
+    this._likeBtn = this._element.querySelector('.gallery__image-like-btn');
+
+    this._updateLikesView();
 
     this._setEventListeners();
 
