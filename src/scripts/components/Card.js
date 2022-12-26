@@ -11,6 +11,8 @@ class Card {
 
     this._userId = userId;
     this._handleLikePress = handleLikePress;
+
+    console.log(this._userId)
   }
 
   _getTemplate() {

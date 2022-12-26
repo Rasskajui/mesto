@@ -4,15 +4,19 @@ class Api {
     this.headers = options.headers;
   }
 
+  _checkResponse(res)  {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка ${res.status}`);
+  }
+
   getUserInfo() {
     return fetch(`${this.baseUrl}/users/me`, {
       method: 'GET',
       headers: this.headers
     })
-      .then(res => res.json())
-      .catch((err) => {
-        console.log(err);
-      })
+    .then(this._checkResponse)
   }
 
   getCards() {
@@ -20,10 +24,7 @@ class Api {
       method: 'GET',
       headers: this.headers
     })
-    .then(res => res.json())
-    .catch((err) => {
-      console.log(`Ошибка: ${err}`);
-    })
+    .then(this._checkResponse)
   }
 
   updateUserInfo(newName, newAbout) {
@@ -35,9 +36,7 @@ class Api {
         about: newAbout
       })
     })
-    .catch((err) => {
-      console.log(`Ошибка: ${err}`);
-    });
+    .then(this._checkResponse)
   }
 
   addCard(cardInfo) {
@@ -49,20 +48,15 @@ class Api {
         link: cardInfo.link
       })
     })
-    .catch((err) => {
-      console.log(`Ошибка: ${err}`);
-    });
+    .then(this._checkResponse)
   }
 
   deleteCard(cardId) {
-    fetch(`${this.baseUrl}/cards/${cardId}`, {
+    return fetch(`${this.baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this.headers
     })
-    .then(res => res.json())
-    .catch((err) => {
-      console.log(`Ошибка: ${err}`);
-    });
+    .then(this._checkResponse)
   }
 
   likeCard(cardId) {
@@ -70,10 +64,7 @@ class Api {
       method: 'PUT',
       headers: this.headers,
     })
-    .then(res => res.json())
-    .catch((err) => {
-      console.log(`Ошибка: ${err}`);
-    });
+    .then(this._checkResponse)
   }
 
   removeLike(cardId) {
@@ -81,10 +72,7 @@ class Api {
       method: 'DELETE',
       headers: this.headers,
     })
-    .then(res => res.json())
-    .catch((err) => {
-      console.log(`Ошибка: ${err}`);
-    });
+    .then(this._checkResponse)
   }
 
   updateAvatar(avatarUrl) {
@@ -95,9 +83,7 @@ class Api {
         avatar: avatarUrl
       })
     })
-    .catch((err) => {
-      console.log(`Ошибка: ${err}`);
-    });
+    .then(this._checkResponse)
   }
 
 }
